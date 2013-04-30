@@ -1,3 +1,4 @@
-= ActiveSchema
+ActiveSchema
+============
 
-This project rocks and uses MIT-LICENSE.
+TODO - This project rocks and uses MIT-LICENSE.
