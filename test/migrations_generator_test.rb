@@ -7,7 +7,7 @@ class MigrationsGeneratorTest < Rails::Generators::TestCase
   setup :prepare_destination
 
   test "It creates a migration for added attributes" do
-    schema = User.schema.merge birth: {type: 'date'}
+    schema = User.schema.merge birth: {type: 'date'}, gender: {type: 'integer'}
     User.stub :schema, schema do
       run_generator
       assert_migration "db/migrate/add_column_birth_to_user.rb" do |migration|
@@ -17,6 +17,7 @@ class MigrationsGeneratorTest < Rails::Generators::TestCase
           assert_match(/date/, change)
         end
       end
+      assert_migration "db/migrate/add_column_gender_to_user.rb"
     end
   end
 

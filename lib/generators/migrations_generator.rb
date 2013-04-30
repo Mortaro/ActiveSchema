@@ -16,7 +16,7 @@ module ActiveSchema
         created_columns.each do |column_name|
           migration_name = "add_column_#{column_name}_to_#{model_name}"
           migration_command = "#{column_name}:#{model.schema[column_name][:type]}"
-          invoke 'active_record:migration', [migration_name, migration_command]
+          generate 'migration', migration_name, migration_command
         end
       end
     end
@@ -28,7 +28,7 @@ module ActiveSchema
         removed_columns.each do |column_name|
           migration_name = "remove_column_#{column_name}_from_#{model_name}"
           migration_command = "#{column_name}:#{model.columns_hash[column_name.to_s].type}"
-          invoke 'active_record:migration', [migration_name, migration_command]
+          generate 'active_record:migration', migration_name, migration_command
         end
       end
     end
