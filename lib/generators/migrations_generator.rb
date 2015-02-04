@@ -11,6 +11,7 @@ module ActiveSchema
 
     def create_columns
       ActiveRecord::Base.subclasses.each do |model|
+        next unless model.respond_to? :schema
         model_name = model.to_s.underscore
         created_columns = (model.schema.keys - model.column_names).map &:to_sym
         created_columns.each do |column_name|
@@ -22,15 +23,15 @@ module ActiveSchema
     end
 
     def remove_columns
-      ActiveRecord::Base.subclasses.each do |model|
-        model_name = model.to_s.underscore
-        removed_columns = (model.column_names - model.schema.keys).map &:to_sym
-        removed_columns.each do |column_name|
-          migration_name = "remove_column_#{column_name}_from_#{model_name}"
-          migration_command = "#{column_name}:#{model.columns_hash[column_name.to_s].type}"
-          generate 'active_record:migration', migration_name, migration_command
-        end
-      end
+      #ActiveRecord::Base.subclasses.each do |model|
+      #  model_name = model.to_s.underscore
+      #  removed_columns = (model.column_names - model.schema.keys).map &:to_sym
+      #  removed_columns.each do |column_name|
+      #    migration_name = "remove_column_#{column_name}_from_#{model_name}"
+      #    migration_command = "#{column_name}:#{model.columns_hash[column_name.to_s].type}"
+      #    generate 'active_record:migration', migration_name, migration_command
+      #  end
+      #end
     end
 
     def migrate
